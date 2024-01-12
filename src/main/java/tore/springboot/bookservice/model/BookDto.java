@@ -1,4 +1,4 @@
-package tore.springboot.bookservice.web.model;
+package tore.springboot.bookservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
