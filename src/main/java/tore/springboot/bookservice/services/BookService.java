@@ -3,9 +3,10 @@ package tore.springboot.bookservice.services;
 import tore.springboot.bookservice.model.BookDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookService {
-    BookDto getBookById(Long bookId);
+    Optional<BookDto> getBookById(Long bookId);
 
     List<BookDto> getAll();
 

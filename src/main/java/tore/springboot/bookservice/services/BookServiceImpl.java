@@ -7,10 +7,11 @@ import tore.springboot.bookservice.model.BookDto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService{
-    private Map<Long, BookDto> bookMap;
+    private final Map<Long, BookDto> bookMap;
     public BookServiceImpl() {
         this.bookMap = new HashMap<>();
 
@@ -30,8 +31,9 @@ public class BookServiceImpl implements BookService{
         bookMap.put(2L, book2);
     }
     @Override
-    public BookDto getBookById(Long bookId) {
-        return bookMap.get(bookId);
+    public Optional<BookDto> getBookById(Long bookId) {
+        BookDto book = bookMap.get(bookId);
+        return Optional.of(book);
     }
 
     @Override
