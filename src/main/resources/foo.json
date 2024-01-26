@@ -1,0 +1,14 @@
+[
+  {
+    "bookId": 1,
+    "title": "Meningen med livet",
+    "isbn": "123456",
+    "source": "db"
+  },
+  {
+    "bookId": 2,
+    "title": "Livet er for kjiipt",
+    "isbn": "123466",
+    "source": "db"
+  }
+]

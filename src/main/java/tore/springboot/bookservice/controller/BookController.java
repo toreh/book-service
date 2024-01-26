@@ -17,13 +17,15 @@ import java.util.List;
 public class BookController {
     public static final String BOOK_PATH = "/api/v1/book";
     public static final String BOOK_PATH_ID = BOOK_PATH + "/{bookId}";
+    public static final String AUTHOR_PATH = "/api/v1/author";
+    public static final String AUTHOR_PATH_ID = AUTHOR_PATH + "/{authorId}";
     private final BookService bookService;
 
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 
-    @GetMapping(value = BOOK_PATH)
+    @GetMapping(value = BOOK_PATH, produces=MediaType.APPLICATION_JSON_VALUE)
     public List<BookDto> getBookById() {
         return bookService.getAll();
     }
@@ -33,6 +35,14 @@ public class BookController {
         headers.add(HttpHeaders.CONTENT_TYPE, String.valueOf(MediaType.APPLICATION_JSON));
         return new ResponseEntity(bookService.getBookById(bookId), headers, HttpStatus.OK);
     }
+
+    @GetMapping(value = AUTHOR_PATH_ID)
+    public ResponseEntity<List<BookDto>> getBooksByAuthorId(@PathVariable("authorId") Long authorId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, String.valueOf(MediaType.APPLICATION_JSON));
+        return new ResponseEntity(bookService.getBooksByAuthorId(authorId), headers, HttpStatus.OK);
+    }
+
 
     @PostMapping(BOOK_PATH_ID)
     public ResponseEntity<BookDto> handlePost(@Validated @RequestBody BookDto book) {

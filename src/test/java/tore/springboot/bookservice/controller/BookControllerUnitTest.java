@@ -77,7 +77,7 @@ class BookControllerUnitTest {
         BookDto book = bookServiceImpl.getBookById(1L).get();
         given(bookService.getBookById(book.getBookId())).willReturn(Optional.of(book));
 
-        String expected = "{bookId:1,title:\"Meningen med livet\",isbn:\"123456\"}";
+        String expected = "{bookId:1,title:\"Meningen med livet\",isbn:\"123456\", source:\"db\"}";
         MvcResult result = mockMvc.perform(get(BookController.BOOK_PATH + "/" + book.getBookId()))
                 .andDo(print()).andReturn();
         String resultString = result.getResponse().getContentAsString();
@@ -91,7 +91,8 @@ class BookControllerUnitTest {
         mockMvc.perform(get(BookController.BOOK_PATH))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.length()", is(2)));
+                .andExpect(jsonPath("$.length()", is(2)))
+                .andDo(print());
     }
 
     @Test
@@ -100,6 +101,7 @@ class BookControllerUnitTest {
                 .bookId(3L)
                 .title("Ny bok")
                 .isbn("234567")
+                .source("db")
                 .build();
 
         given(bookService.saveNewBook(book)).willReturn(book);

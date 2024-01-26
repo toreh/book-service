@@ -1,5 +1,6 @@
 package tore.springboot.bookservice.services;
 
+import tore.springboot.bookservice.model.AuthorBookDto;
 import tore.springboot.bookservice.model.BookDto;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface BookService {
 
     List<BookDto> getAll();
 
-    List<BookDto> getBookByAuthorId(Long authorId);
+    List<AuthorBookDto> getBooksByAuthorId(Long authorId);
 
     BookDto saveNewBook(BookDto book);
 

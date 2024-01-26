@@ -1,7 +1,9 @@
 package tore.springboot.bookservice.services;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import tore.springboot.bookservice.model.AuthorBookDto;
 import tore.springboot.bookservice.model.BookDto;
 
 import java.util.HashMap;
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@Primary
 @Service
 public class BookServiceImpl implements BookService{
     private final Map<Long, BookDto> bookMap;
@@ -19,12 +22,14 @@ public class BookServiceImpl implements BookService{
                 .bookId(1L)
                 .title("Meningen med livet")
                 .isbn("123456")
+                .source("db")
                 .build();
 
         BookDto book2 = BookDto.builder()
                 .bookId(2L)
                 .title("Livet er for kjiipt")
                 .isbn("123466")
+                .source("db")
                 .build();
 
         bookMap.put(1L, book);
@@ -36,14 +41,14 @@ public class BookServiceImpl implements BookService{
         return Optional.of(book);
     }
 
-    @Override
-    public List<BookDto> getAll() {
-        return bookMap.values().stream().toList();
-    }
+   @Override
+   public List<BookDto> getAll() {
+       return bookMap.values().stream().toList();
+   }
 
     @Override
-    public List<BookDto> getBookByAuthorId(Long authorId) {
-        return bookMap.values().stream().toList();
+    public List<AuthorBookDto> getBooksByAuthorId(Long authorId) {
+        return null;
     }
 
     @Override
