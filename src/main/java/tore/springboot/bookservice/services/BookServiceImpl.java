@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Primary
+
 @Service
-public class BookServiceImpl implements BookService{
+public class BookServiceImpl implements BookServiceGet, BookServiceGetByAuthorId ,BookService{
     private final Map<Long, BookDto> bookMap;
     public BookServiceImpl() {
         this.bookMap = new HashMap<>();

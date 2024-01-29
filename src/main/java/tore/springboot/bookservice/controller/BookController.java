@@ -9,6 +9,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tore.springboot.bookservice.services.BookService;
 import tore.springboot.bookservice.model.BookDto;
+import tore.springboot.bookservice.services.BookServiceGet;
+import tore.springboot.bookservice.services.BookServiceGetByAuthorId;
 
 import java.util.List;
 
@@ -19,28 +21,31 @@ public class BookController {
     public static final String BOOK_PATH_ID = BOOK_PATH + "/{bookId}";
     public static final String AUTHOR_PATH = "/api/v1/author";
     public static final String AUTHOR_PATH_ID = AUTHOR_PATH + "/{authorId}";
+    private final BookServiceGet bookServiceGet;
+    private final BookServiceGetByAuthorId bookServiceGetByAuthorId;
     private final BookService bookService;
-
-    public BookController(BookService bookService) {
+    public BookController(BookServiceGet bookServiceGet, BookServiceGetByAuthorId bookServiceGetByAuthorId, BookService bookService) {
+        this.bookServiceGet = bookServiceGet;
+        this.bookServiceGetByAuthorId = bookServiceGetByAuthorId;
         this.bookService = bookService;
     }
 
     @GetMapping(value = BOOK_PATH, produces=MediaType.APPLICATION_JSON_VALUE)
     public List<BookDto> getBookById() {
-        return bookService.getAll();
+        return bookServiceGet.getAll();
     }
     @GetMapping(value = BOOK_PATH_ID)
     public ResponseEntity<BookDto> getBookById(@PathVariable("bookId") Long bookId) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, String.valueOf(MediaType.APPLICATION_JSON));
-        return new ResponseEntity(bookService.getBookById(bookId), headers, HttpStatus.OK);
+        return new ResponseEntity(bookServiceGet.getBookById(bookId), headers, HttpStatus.OK);
     }
 
     @GetMapping(value = AUTHOR_PATH_ID)
     public ResponseEntity<List<BookDto>> getBooksByAuthorId(@PathVariable("authorId") Long authorId) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, String.valueOf(MediaType.APPLICATION_JSON));
-        return new ResponseEntity(bookService.getBooksByAuthorId(authorId), headers, HttpStatus.OK);
+        return new ResponseEntity(bookServiceGetByAuthorId.getBooksByAuthorId(authorId), headers, HttpStatus.OK);
     }
 
 

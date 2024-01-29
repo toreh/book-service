@@ -13,6 +13,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import tore.springboot.bookservice.model.BookDto;
 import tore.springboot.bookservice.services.BookService;
+import tore.springboot.bookservice.services.BookServiceGet;
+import tore.springboot.bookservice.services.BookServiceGetByAuthorId;
 import tore.springboot.bookservice.services.BookServiceImpl;
 
 import java.util.Optional;
@@ -34,14 +36,19 @@ class BookControllerUnitTest {
     ObjectMapper objectMapper;
 
     @MockBean
+    BookServiceGet bookServiceGet;
+    @MockBean
+    BookServiceGetByAuthorId bookServiceGetByAuthorId;
+    @MockBean
     BookService bookService;
+
 
     BookServiceImpl bookServiceImpl = new BookServiceImpl();
 
     @Test
     void getBookById() throws Exception {
         BookDto book = bookServiceImpl.getBookById(1L).get();
-        given(bookService.getBookById(book.getBookId())).willReturn(Optional.of(book));
+        given(bookServiceGet.getBookById(book.getBookId())).willReturn(Optional.of(book));
 
         mockMvc.perform(get(BookController.BOOK_PATH + "/" + book.getBookId()))
                 .andExpect(status().isOk())
@@ -53,7 +60,7 @@ class BookControllerUnitTest {
     @Test
     void getBookByIdNotFound() throws Exception {
         BookDto book = bookServiceImpl.getBookById(1L).get();
-        given(bookService.getBookById(book.getBookId())).willReturn(null);
+        given(bookServiceGet.getBookById(book.getBookId())).willReturn(null);
 
         mockMvc.perform(get(BookController.BOOK_PATH + "/" + book.getBookId()))
                 .andExpect(status().isOk())
@@ -64,7 +71,7 @@ class BookControllerUnitTest {
     @Test
     void getBookByIdThrowsException() throws Exception {
         BookDto book = bookServiceImpl.getBookById(1L).get();
-        given(bookService.getBookById(book.getBookId())).willThrow(new RuntimeException("Runtime exception ...."));
+        given(bookServiceGet.getBookById(book.getBookId())).willThrow(new RuntimeException("Runtime exception ...."));
 
         mockMvc.perform(get(BookController.BOOK_PATH + "/" + book.getBookId()))
                 .andExpect(status().isInternalServerError())
@@ -75,7 +82,7 @@ class BookControllerUnitTest {
     @Test
     void getBookByIdExactMatch() throws Exception {
         BookDto book = bookServiceImpl.getBookById(1L).get();
-        given(bookService.getBookById(book.getBookId())).willReturn(Optional.of(book));
+        given(bookServiceGet.getBookById(book.getBookId())).willReturn(Optional.of(book));
 
         String expected = "{bookId:1,title:\"Meningen med livet\",isbn:\"123456\", source:\"db\"}";
         MvcResult result = mockMvc.perform(get(BookController.BOOK_PATH + "/" + book.getBookId()))
@@ -86,7 +93,7 @@ class BookControllerUnitTest {
 
     @Test
     void getAll() throws Exception {
-        given(bookService.getAll()).willReturn(bookServiceImpl.getAll());
+        given(bookServiceGet.getAll()).willReturn(bookServiceImpl.getAll());
 
         mockMvc.perform(get(BookController.BOOK_PATH))
                 .andExpect(status().isOk())
@@ -112,7 +119,7 @@ class BookControllerUnitTest {
                     .content(objectMapper.writeValueAsString(book)))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.length()", is(3)));
+                .andExpect(jsonPath("$.length()", is(4)));
 
     }
 
