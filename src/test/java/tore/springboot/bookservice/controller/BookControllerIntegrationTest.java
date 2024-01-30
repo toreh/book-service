@@ -3,7 +3,6 @@ package tore.springboot.bookservice.controller;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -11,10 +10,9 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
-import tore.springboot.bookservice.model.AuthorBookDto;
+import tore.springboot.bookservice.model.AuthorBookDTO;
 
 import java.util.List;
-import java.util.function.BooleanSupplier;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,12 +51,12 @@ class BookControllerIntegrationTest {
         int expectedNumOfBooks = 3;
 
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
-        ResponseEntity<List<AuthorBookDto>> response = restTemplate.exchange(
+        ResponseEntity<List<AuthorBookDTO>> response = restTemplate.exchange(
                 createURLWithPort(BookController.AUTHOR_PATH + "/" + authorId),
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<AuthorBookDto>>() {});
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<AuthorBookDTO>>() {});
 
         System.out.println("===>>>ResponseEntity: " + response);
-        List<AuthorBookDto> authorBooks = response.getBody();
+        List<AuthorBookDTO> authorBooks = response.getBody();
 
         assertNotNull(response);
         assertEquals(expectedNumOfBooks, authorBooks.size());

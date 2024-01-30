@@ -1,15 +1,15 @@
 package tore.springboot.bookservice.dao;
 
 import org.springframework.jdbc.core.RowMapper;
-import tore.springboot.bookservice.model.BookDto;
+import tore.springboot.bookservice.model.BookDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class BookRowMapper implements RowMapper<BookDto> {
+public class BookRowMapper implements RowMapper<BookDTO> {
     @Override
-    public BookDto mapRow(final ResultSet rs, final int rowNum) throws SQLException, SQLException {
-        final BookDto book = new BookDto();
+    public BookDTO mapRow(final ResultSet rs, final int rowNum) throws SQLException, SQLException {
+        final BookDTO book = new BookDTO();
 
         book.setBookId(rs.getLong("bookId"));
         book.setTitle(rs.getString("title"));

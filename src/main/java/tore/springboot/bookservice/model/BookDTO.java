@@ -11,11 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class AuthorBookDto {
+public class BookDTO {
 
-    private Long authorId;
-    private String name;
     private Long bookId;
+    @NotNull
+    @NotBlank
     private String title;
+    private String isbn;
     private String source;
 }

@@ -1,13 +1,13 @@
 package tore.springboot.bookservice.dao;
 
-import tore.springboot.bookservice.model.AuthorBookDto;
-import tore.springboot.bookservice.model.BookDto;
+import tore.springboot.bookservice.model.AuthorBookDTO;
+import tore.springboot.bookservice.model.BookDTO;
 
 import java.util.List;
 
 public interface BookDAO {
-    public BookDto getBookById(Long bookId);
-    public List<AuthorBookDto> getBooksByAuthorId(Long authorId);
+    public BookDTO getBookById(Long bookId);
+    public List<AuthorBookDTO> getBooksByAuthorId(Long authorId);
 
 }
 

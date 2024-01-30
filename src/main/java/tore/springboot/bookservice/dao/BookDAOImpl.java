@@ -5,8 +5,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
-import tore.springboot.bookservice.model.AuthorBookDto;
-import tore.springboot.bookservice.model.BookDto;
+import tore.springboot.bookservice.model.AuthorBookDTO;
+import tore.springboot.bookservice.model.BookDTO;
 
 import java.util.List;
 
@@ -25,20 +25,20 @@ public class BookDAOImpl implements BookDAO {
     }
 
    //@Override
-    public BookDto getBookById2(Long bookId) {
+    public BookDTO getBookById2(Long bookId) {
 
         return jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, new BookRowMapper(), bookId);
     }
 
     @Override
-    public BookDto getBookById(Long bookId) {
+    public BookDTO getBookById(Long bookId) {
         SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("id", 1);
-        BookDto book =  namedParameterJdbcTemplate.queryForObject(SQL_SELECT_BY_ID_NAMED, namedParameters ,new BookRowMapper());
+        BookDTO book =  namedParameterJdbcTemplate.queryForObject(SQL_SELECT_BY_ID_NAMED, namedParameters ,new BookRowMapper());
         return book;
     }
 
     @Override
-    public List<AuthorBookDto> getBooksByAuthorId(Long authorId) {
+    public List<AuthorBookDTO> getBooksByAuthorId(Long authorId) {
         SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("id", 1);
         return namedParameterJdbcTemplate.query(SQL_SELECT_BY_AUTHOR_ID_NAMED, namedParameters ,new AuthorBookRowMapper());
     }

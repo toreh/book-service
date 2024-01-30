@@ -1,17 +1,13 @@
 package tore.springboot.bookservice.services;
 
-import tore.springboot.bookservice.model.AuthorBookDto;
-import tore.springboot.bookservice.model.BookDto;
-
-import java.util.List;
-import java.util.Optional;
+import tore.springboot.bookservice.model.BookDTO;
 
 public interface BookService {
-    BookDto saveNewBook(BookDto book);
+    BookDTO saveNewBook(BookDTO book);
 
-    void updateBook(Long bookId, BookDto book);
+    void updateBook(Long bookId, BookDTO book);
 
     void deleteBookById(Long bookId);
 
-    void patchBookById(Long bookId, BookDto book);
+    void patchBookById(Long bookId, BookDTO book);
 }

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tore.springboot.bookservice.services.BookService;
-import tore.springboot.bookservice.model.BookDto;
+import tore.springboot.bookservice.model.BookDTO;
 import tore.springboot.bookservice.services.BookServiceGet;
 import tore.springboot.bookservice.services.BookServiceGetByAuthorId;
 
@@ -31,18 +31,18 @@ public class BookController {
     }
 
     @GetMapping(value = BOOK_PATH, produces=MediaType.APPLICATION_JSON_VALUE)
-    public List<BookDto> getBookById() {
+    public List<BookDTO> getBookById() {
         return bookServiceGet.getAll();
     }
     @GetMapping(value = BOOK_PATH_ID)
-    public ResponseEntity<BookDto> getBookById(@PathVariable("bookId") Long bookId) {
+    public ResponseEntity<BookDTO> getBookById(@PathVariable("bookId") Long bookId) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, String.valueOf(MediaType.APPLICATION_JSON));
         return new ResponseEntity(bookServiceGet.getBookById(bookId), headers, HttpStatus.OK);
     }
 
     @GetMapping(value = AUTHOR_PATH_ID)
-    public ResponseEntity<List<BookDto>> getBooksByAuthorId(@PathVariable("authorId") Long authorId) {
+    public ResponseEntity<List<BookDTO>> getBooksByAuthorId(@PathVariable("authorId") Long authorId) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, String.valueOf(MediaType.APPLICATION_JSON));
         return new ResponseEntity(bookServiceGetByAuthorId.getBooksByAuthorId(authorId), headers, HttpStatus.OK);
@@ -50,8 +50,8 @@ public class BookController {
 
 
     @PostMapping(BOOK_PATH_ID)
-    public ResponseEntity<BookDto> handlePost(@Validated @RequestBody BookDto book) {
-        BookDto savedBook = bookService.saveNewBook(book);
+    public ResponseEntity<BookDTO> handlePost(@Validated @RequestBody BookDTO book) {
+        BookDTO savedBook = bookService.saveNewBook(book);
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, String.valueOf(MediaType.APPLICATION_JSON));
         headers.add("Location", "/api/v1/book/" + savedBook.getBookId());
@@ -59,7 +59,7 @@ public class BookController {
     }
 
     @PutMapping (BOOK_PATH_ID)
-    public ResponseEntity<Void> updateById(@PathVariable("bookId") Long bookId, @RequestBody BookDto book) {
+    public ResponseEntity<Void> updateById(@PathVariable("bookId") Long bookId, @RequestBody BookDTO book) {
         bookService.updateBook(bookId, book);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -71,7 +71,7 @@ public class BookController {
     }
 
     @PatchMapping(BOOK_PATH_ID)
-    public ResponseEntity<Void> updatePatchById(@PathVariable("bookId") Long bookId, @RequestBody BookDto book) {
+    public ResponseEntity<Void> updatePatchById(@PathVariable("bookId") Long bookId, @RequestBody BookDTO book) {
             bookService.patchBookById(bookId, book);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
